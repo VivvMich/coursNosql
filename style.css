@@ -9,3 +9,7 @@ label{
 .failed {
     color: red;
 }
+
+div.g-recaptcha {
+    display: inline-block;
+}

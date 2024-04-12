@@ -2,6 +2,9 @@
 require_once 'vendor/autoload.php';
 require "tools.php";
 
+
+
+
 /**
  * This function check if value of key from any array is null or undefined.
  * @autor MichôtrucheSama The great Vizir of Chaos.
@@ -18,16 +21,43 @@ function checkPost($array) : bool {
     return true;
 }
 
+/**
+ * This function check google captcha
+ * @autor MichôtrucheSama The great Vizir of Chaos.
+ */
+function captcha($recaptcha) : bool {
+    $secret = "6Lcb5rgpAAAAACIFxt0Gn6oGtY6bdUZmpFMxC9e7";
+    $curl = curl_init();
+    curl_setopt($curl, CURLOPT_URL, 'https://www.google.com/recaptcha/api/siteverify?secret='.$secret.'&response='.$recaptcha);
+    curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
+    $response = curl_exec($curl);
+    curl_close($curl);
+    $data = json_decode($response);
+
+    if ($data->success) {
+        return true;
+    }else {
+        return false;
+    }
+
+}
+
 if ( checkPost($_POST) ) {
-    $client = new \MongoDB\Client("mongodb://localhost:27017");
-    $database = $client->selectDatabase('object');
-    $collection = $database->selectCollection('curse_object');
-    $curse_object = [
-        "name" => $_POST["objet_name"],
-        "curse" => $_POST["objet_curse"]
-    ];
-    $result = $collection->insertOne($curse_object); // Insert value in collection
-    sendMessage("Invocation d'un objet maudit reussi", "success", "create_weapon_form.php");
+    if ( captcha($_POST['g-recaptcha-response'])) {
+        $client = new \MongoDB\Client("mongodb://localhost:27017");
+        $database = $client->selectDatabase('object');
+        $collection = $database->selectCollection('curse_object');
+        $curse_object = [
+            "name" => $_POST["objet_name"],
+            "curse" => $_POST["objet_curse"]
+        ];
+        $result = $collection->insertOne($curse_object); // Insert value in collection
+        sendMessage("Invocation d'un objet maudit reussi", "success", "create_weapon_form.php");
+    } else {
+        sendMessage("Problème avec le recaptcha", "failed", "create_weapon_form.php");
+
+    }
+
 }else {
     sendMessage("Le formulaire n'est pas valide", "failed", "create_weapon_form.php");
 }
