@@ -1,0 +1,17 @@
+{
+    "name": "formateur/nosql",
+    "autoload": {
+        "psr-4": {
+            "Formateur\\Nosql\\": "src/"
+        }
+    },
+    "authors": [
+        {
+            "name": "VivvMich",
+            "email": "mvicorp@hotmail.fr"
+        }
+    ],
+    "require": {
+        "mongodb/mongodb": "^1.17"
+    }
+}
