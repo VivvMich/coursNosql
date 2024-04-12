@@ -3,7 +3,20 @@ ini_set('display_errors', '1');
 ini_set('display_startup_errors', '1');
 error_reporting(E_ALL);
 require_once 'vendor/autoload.php';
-require_once 'tools.php';
+
+/**
+ * Create and fill log file with message
+ * @param String $message the message to add in log file, with date an time.
+ * @return void
+ */
+function addLog(String $message) : void{
+    $file = fopen("/var/www/html/NOSQL/theCurseLog.log", "a") or die("Impossible d'ouvrir le fichier.");
+    date_default_timezone_set('Europe/Paris');
+    $dateObj = new DateTime();
+    $date = $dateObj->format('d-m-Y H:i:s');
+    $fullMessage = $date . " : " . $message . "\n";
+    fwrite($file, $fullMessage);
+}
 
 $pdo = new PDO("mysql:host=localhost;dbname=nosql", "formateur", "1234");
 
@@ -27,8 +40,9 @@ try {
 
     $objects = $collection->find()->toArray();
     $nbr_objects = count($objects);
-    $name_objects = $objects[rand(0, $nbr_objects - 1)]['name'];
-    $curse_objects = $objects[rand(0, $nbr_objects - 1)]['curse'];
+    $rand = rand(0, $nbr_objects - 1);
+    $name_objects = $objects[$rand]['name'];
+    $curse_objects = $objects[$rand]['curse'];
 
     $age = rand(18, 106);
 
