@@ -36,7 +36,7 @@
                     <input type="text" class="form-control" name="objet_curse" placeholder="Ex : Quand je porte l'objet, je perds une phalange." >
                 </div>
                 <div class="text-center my-4 mx-auto">
-                    <div class="g-recaptcha" data-sitekey="6Lcb5rgpAAAAAJTN5Zwzy7Py8kaMEyBylW1e28Dc"></div>
+<!--                    <div class="g-recaptcha" data-sitekey="6Lcb5rgpAAAAAJTN5Zwzy7Py8kaMEyBylW1e28Dc"></div>-->
                 </div>
                 <div class="text-center">
                     <button type="submit" class="btn btn-danger">Invocation de l'objet.</button>

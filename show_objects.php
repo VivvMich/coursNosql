@@ -20,7 +20,7 @@
 </div>
 <?php
 require_once 'vendor/autoload.php';
-$client = new \MongoDB\Client("mongodb://localhost:27017");
+$client = new \MongoDB\Client("mongodb://root:1234@mongo:27017/");
 $database = $client->selectDatabase('object');
 $collection = $database->selectCollection('curse_object');
 $objects = $collection->find();

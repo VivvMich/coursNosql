@@ -26,7 +26,7 @@ function checkPost($array) : bool {
  * @autor MichôtrucheSama The great Vizir of Chaos.
  */
 function captcha($recaptcha) : bool {
-    $secret = "6Lcb5rgpAAAAACIFxt0Gn6oGtY6bdUZmpFMxC9e7";
+    $secret = "6Lcue7kpAAAAAAnzOFI6vCPGUlPwIrHUd1KVpunz";
     $curl = curl_init();
     curl_setopt($curl, CURLOPT_URL, 'https://www.google.com/recaptcha/api/siteverify?secret='.$secret.'&response='.$recaptcha);
     curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
@@ -43,8 +43,9 @@ function captcha($recaptcha) : bool {
 }
 
 if ( checkPost($_POST) ) {
-    if ( captcha($_POST['g-recaptcha-response'])) {
-        $client = new \MongoDB\Client("mongodb://localhost:27017");
+    //if ( captcha($_POST['g-recaptcha-response'])) {
+        if ( true) {
+        $client = new \MongoDB\Client("mongodb://root:1234@mongo:27017/");
         $database = $client->selectDatabase('object');
         $collection = $database->selectCollection('curse_object');
         $curse_object = [
